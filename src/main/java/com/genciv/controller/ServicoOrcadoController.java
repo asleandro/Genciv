@@ -45,7 +45,6 @@ public class ServicoOrcadoController {
             ServicoOrcado servicoOrcado = new ServicoOrcado();
             servicoOrcado.setServico(servico);
             servicoOrcado.setQuantidade(servicoOrcadoDTO.getQuantidade());
-            //servicoOrcado.setUnidade(servicoOrcadoDTO.getUnidade());
             servicoOrcado.setOrcamento(orcamento);
 
             ServicoOrcado servicoOrcadoCriado = servicoOrcadoService.salvar(servicoOrcado);

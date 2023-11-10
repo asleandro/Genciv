@@ -6,7 +6,9 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.genciv.model.MaterialConsumido;
 import com.genciv.model.Orcamento;
+import com.genciv.model.Servico;
 import com.genciv.model.ServicoOrcado;
 import com.genciv.repository.OrcamentoRepository;
 
@@ -43,32 +45,15 @@ public class OrcamentoService {
 		orcamentoRepository.deleteById(id);
 	}
 
-	/*
-	 * public Orcamento criarOrcamentoComServicos(Orcamento orcamento,
-	 * List<ServicoOrcado> servicosOrcados) { Orcamento novoOrcamento =
-	 * orcamentoRepository.save(orcamento);
-	 * 
-	 * for (ServicoOrcado servicoOrcado : servicosOrcados) {
-	 * servicoOrcado.setOrcamento(novoOrcamento);
-	 * novoOrcamento.getServicosOrcados().add(servicoOrcado);
-	 * servicoOrcadoService.salvar(servicoOrcado); } novoOrcamento =
-	 * orcamentoRepository.save(novoOrcamento); return novoOrcamento; }
-	 */
 	public Orcamento criarOrcamentoComServicos(Orcamento orcamento, List<ServicoOrcado> servicosOrcados) {
 		Orcamento novoOrcamento = orcamentoRepository.save(orcamento);
 
 		List<ServicoOrcado> listaServicosOrcados = new ArrayList<>();
 
 		for (ServicoOrcado servicoOrcado : servicosOrcados) {
-			ServicoOrcado novoServicoOrcado = new ServicoOrcado();
-			novoServicoOrcado.setOrcamento(novoOrcamento);
-			novoServicoOrcado.setQuantidade(servicoOrcado.getQuantidade());
-			novoServicoOrcado.setServico(servicoOrcado.getServico());
-
-			listaServicosOrcados.add(novoServicoOrcado);
-			// novoOrcamento.getServicosOrcados().add(novoServicoOrcado);
-			servicoOrcadoService.salvar(novoServicoOrcado);
-
+			servicoOrcado.setOrcamento(novoOrcamento);
+			listaServicosOrcados.add(servicoOrcado);
+			servicoOrcadoService.salvar(servicoOrcado);
 		}
 
 		novoOrcamento = orcamentoRepository.save(novoOrcamento);

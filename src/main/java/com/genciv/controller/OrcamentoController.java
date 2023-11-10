@@ -6,7 +6,9 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -67,27 +69,47 @@ public class OrcamentoController {
 				Servico servico = servicoService.buscarPorId(servicoOrcadoDTO.getServicoId());
 				ServicoOrcado servicoOrcado = new ServicoOrcado();
 				servicoOrcado.setServico(servico);
-				servicoOrcado.setQuantidade(servicoOrcado.getQuantidade());
+				servicoOrcado.setQuantidade(servicoOrcadoDTO.getQuantidade());
 				servicosOrcados.add(servicoOrcado);
 			}
-			
+
 			orcamento.setServicosOrcados(servicosOrcados);
-
-			Orcamento orcamentoComServicos = orcamentoService.criarOrcamentoComServicos(orcamento, servicosOrcados);
-
+			Orcamento orcamentoComServicos = orcamentoService.criarOrcamentoComServicos(orcamento,
+					servicosOrcados);
 			return new ResponseEntity<>(orcamentoComServicos, HttpStatus.CREATED);
 
 		} catch (Exception e) {
 			e.printStackTrace();
 			String mensagem = e.getMessage();
 
-			return new ResponseEntity<>("Erro ao criar orçamento: " + mensagem, HttpStatus.INTERNAL_SERVER_ERROR);
+			return new ResponseEntity<>("Erro ao criar orçamento: " + mensagem,
+					HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 	}
 
 	@GetMapping
 	public List<Orcamento> listarOrcamentos() {
 		return orcamentoService.listarTodos();
+	}
+	
+	@GetMapping("/{id}")
+	public ResponseEntity<Orcamento> detalhesOrcamento(@PathVariable Long id) {
+		Orcamento orcamento = orcamentoService.buscarPorId(id);
+		if (orcamento != null) {
+			return new ResponseEntity<>(orcamento, HttpStatus.OK);
+		} else {
+			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+		}
+	}
+	
+	@DeleteMapping("/{id}/excluir")
+	public ResponseEntity<Void> excluirOrcamento(@PathVariable Long id) {
+		Orcamento orcamento = orcamentoService.buscarPorId(id);
+		if (orcamento == null) {
+			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+		}
+		orcamentoService.excluir(id);
+		return new ResponseEntity<>(HttpStatus.NO_CONTENT);
 	}
 
 }

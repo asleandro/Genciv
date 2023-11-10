@@ -24,8 +24,8 @@ public class Orcamento {
 	@Column(name = "id")
 	private Long id;
 
-	@ManyToOne
-	@JoinColumn(name = "cliente_id", insertable = false, updatable = false)
+	@ManyToOne(fetch = FetchType.EAGER)
+	@JoinColumn(name = "cliente_id")
 	private Cliente cliente;
 
 	private String obraOrcada;
