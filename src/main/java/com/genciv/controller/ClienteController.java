@@ -14,11 +14,11 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.genciv.cliente.Cliente;
-import com.genciv.cliente.ClienteDTO;
-import com.genciv.cliente.ClienteService;
-import com.genciv.endereco.Endereco;
-import com.genciv.endereco.EnderecoService;
+import com.genciv.dto.ClienteDTO;
+import com.genciv.model.Cliente;
+import com.genciv.model.Endereco;
+import com.genciv.repository.EnderecoService;
+import com.genciv.service.ClienteService;
 
 @RestController
 @RequestMapping("/clientes")

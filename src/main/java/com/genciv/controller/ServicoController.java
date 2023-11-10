@@ -14,13 +14,10 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.genciv.material.Material;
-import com.genciv.material.MaterialService;
-import com.genciv.materialconsumido.MaterialConsumido;
-import com.genciv.materialconsumido.MaterialConsumidoService;
-import com.genciv.servico.Servico;
-import com.genciv.servico.ServicoRepository;
-import com.genciv.servico.ServicoService;
+import com.genciv.dto.ServicoDTO;
+import com.genciv.model.Servico;
+import com.genciv.service.MaterialConsumidoService;
+import com.genciv.service.ServicoService;
 
 @RestController
 @RequestMapping("/servicos")
@@ -33,7 +30,8 @@ public class ServicoController {
 	private MaterialConsumidoService materialConsumidoService;
 
 	@PostMapping("/novo")
-	public ResponseEntity<?> criarServico(@RequestBody Servico servicoDTO) {
+	public ResponseEntity<?> criarServico(@RequestBody ServicoDTO servicoDTO) {
+		// verificar se ainda funciona após mudar a classe acima para ServicoDTO
 		try {
 			Servico servico = new Servico();
 			servico.setNome(servicoDTO.getNome());

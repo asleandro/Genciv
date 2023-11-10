@@ -14,11 +14,11 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.genciv.endereco.Endereco;
-import com.genciv.endereco.EnderecoService;
-import com.genciv.fornecedor.Fornecedor;
-import com.genciv.fornecedor.FornecedorDTO;
-import com.genciv.fornecedor.FornecedorService;
+import com.genciv.dto.FornecedorDTO;
+import com.genciv.model.Endereco;
+import com.genciv.model.Fornecedor;
+import com.genciv.repository.EnderecoService;
+import com.genciv.service.FornecedorService;
 
 @RestController
 @RequestMapping("/fornecedores")

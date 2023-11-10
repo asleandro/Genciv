@@ -14,11 +14,11 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.genciv.fornecedor.Fornecedor;
-import com.genciv.fornecedor.FornecedorService;
-import com.genciv.material.Material;
-import com.genciv.material.MaterialDTO;
-import com.genciv.material.MaterialService;
+import com.genciv.dto.MaterialDTO;
+import com.genciv.model.Fornecedor;
+import com.genciv.model.Material;
+import com.genciv.service.FornecedorService;
+import com.genciv.service.MaterialService;
 
 @RestController
 @RequestMapping("/materiais")

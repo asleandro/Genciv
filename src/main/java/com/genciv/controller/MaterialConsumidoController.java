@@ -13,9 +13,9 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.genciv.materialconsumido.MaterialConsumido;
-import com.genciv.materialconsumido.MaterialConsumidoService;
-import com.genciv.servico.Servico;
+import com.genciv.model.MaterialConsumido;
+import com.genciv.model.Servico;
+import com.genciv.service.MaterialConsumidoService;
 
 @RestController
 @RequestMapping("/materiaisconsumidos")
