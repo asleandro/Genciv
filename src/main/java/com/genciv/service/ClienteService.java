@@ -26,7 +26,7 @@ public class ClienteService {
 	}
 
 	@Transactional
-	public Cliente buscarPorId(Long id) {
+	public Cliente findById(Long id) {
 		return clienteRepository.findById(id).orElse(null);
 	}
 

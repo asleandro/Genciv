@@ -6,9 +6,8 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.genciv.model.MaterialConsumido;
+import com.genciv.model.Cliente;
 import com.genciv.model.Orcamento;
-import com.genciv.model.Servico;
 import com.genciv.model.ServicoOrcado;
 import com.genciv.repository.OrcamentoRepository;
 
@@ -22,6 +21,9 @@ public class OrcamentoService {
 
 	@Autowired
 	private ServicoOrcadoService servicoOrcadoService;
+	
+	@Autowired
+	private ClienteService clienteService;
 
 	public Orcamento salvar(Orcamento orcamento) {
 		return orcamentoRepository.save(orcamento);
@@ -31,7 +33,7 @@ public class OrcamentoService {
 		return orcamentoRepository.findAll();
 	}
 
-	public Orcamento buscarPorId(Long id) {
+	public Orcamento findById(Long id) {
 		return orcamentoRepository.findById(id).orElse(null);
 	}
 
@@ -47,6 +49,9 @@ public class OrcamentoService {
 
 	public Orcamento criarOrcamentoComServicos(Orcamento orcamento, List<ServicoOrcado> servicosOrcados) {
 		Orcamento novoOrcamento = orcamentoRepository.save(orcamento);
+		
+		Cliente cliente = clienteService.findById(orcamento.getCliente().getId());
+		novoOrcamento.setCliente(cliente);
 
 		List<ServicoOrcado> listaServicosOrcados = new ArrayList<>();
 
@@ -60,5 +65,12 @@ public class OrcamentoService {
 
 		return novoOrcamento;
 	}
+
+	public String construirLinkAprovacao(Orcamento orcamento) {
+
+		return ConstrutorURL.construirURLAprovacaoOrcamento(orcamento.getId(), orcamento.getCodigoAprovacao());
+	}
+	
+	
 
 }

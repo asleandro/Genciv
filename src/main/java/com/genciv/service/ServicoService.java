@@ -32,7 +32,7 @@ public class ServicoService {
 		return servicoRepository.findAll();
 	}
 
-	public Servico buscarPorId(Long id) {
+	public Servico findById(Long id) {
 		return servicoRepository.findById(id).orElse(null);
 	}
 	

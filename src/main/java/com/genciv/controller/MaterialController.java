@@ -54,7 +54,7 @@ public class MaterialController {
 			List<Fornecedor> fornecedores = materialDTO.getFornecedores();
 			if (fornecedores != null) {
 				for (Fornecedor fornecedor : fornecedores) {
-					Fornecedor fornecedorExistente = fornecedorService.buscarPorId(fornecedor.getId());
+					Fornecedor fornecedorExistente = fornecedorService.findById(fornecedor.getId());
 					if (fornecedorExistente != null) {
 						material.getFornecedores().add(fornecedorExistente);
 					}

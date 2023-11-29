@@ -2,6 +2,7 @@ package com.genciv.controller;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -12,6 +13,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.genciv.dto.OrcamentoDTO;
@@ -66,7 +68,7 @@ public class OrcamentoController {
 
 			List<ServicoOrcado> servicosOrcados = new ArrayList<>();
 			for (ServicoOrcadoDTO servicoOrcadoDTO : orcamentoDTO.getServicosOrcados()) {
-				Servico servico = servicoService.buscarPorId(servicoOrcadoDTO.getServicoId());
+				Servico servico = servicoService.findById(servicoOrcadoDTO.getServicoId());
 				ServicoOrcado servicoOrcado = new ServicoOrcado();
 				servicoOrcado.setServico(servico);
 				servicoOrcado.setQuantidade(servicoOrcadoDTO.getQuantidade());
@@ -94,7 +96,7 @@ public class OrcamentoController {
 	
 	@GetMapping("/{id}")
 	public ResponseEntity<Orcamento> detalhesOrcamento(@PathVariable Long id) {
-		Orcamento orcamento = orcamentoService.buscarPorId(id);
+		Orcamento orcamento = orcamentoService.findById(id);
 		if (orcamento != null) {
 			return new ResponseEntity<>(orcamento, HttpStatus.OK);
 		} else {
@@ -104,12 +106,51 @@ public class OrcamentoController {
 	
 	@DeleteMapping("/{id}/excluir")
 	public ResponseEntity<Void> excluirOrcamento(@PathVariable Long id) {
-		Orcamento orcamento = orcamentoService.buscarPorId(id);
+		Orcamento orcamento = orcamentoService.findById(id);
 		if (orcamento == null) {
 			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
 		}
 		orcamentoService.excluir(id);
 		return new ResponseEntity<>(HttpStatus.NO_CONTENT);
 	}
+	
+	/*
+	@PostMapping("/aprovar-orcamento/{id}")
+	public ResponseEntity<String> aprovarOrcamento(@PathVariable Long id){
+		Orcamento orcamento = orcamentoService.buscarPorId(id);
+
+	    if (orcamento != null) {
+	        orcamento.aprovarOrcamento();
+	        orcamentoService.salvar(orcamento);
+	        return ResponseEntity.ok("Orcamento aprovado com sucesso!");
+	    } else {
+	        return ResponseEntity.notFound().build();
+	    }
+	}
+	*/
+	
+	@PostMapping("/{id}/aprovar")
+	public ResponseEntity<String> aprovarOrcamento(@PathVariable Long id, @RequestParam String codigo) {
+	    Orcamento orcamento = orcamentoService.findById(id);
+
+	    if (orcamento != null) {
+	        if (codigo.equals(orcamento.getCodigoAprovacao())) {
+	            if (!orcamento.getAprovado()) {  // Verifica se o orçamento ainda não foi aprovado
+	                orcamento.aprovarOrcamento();
+	                orcamentoService.salvar(orcamento);
+	                return ResponseEntity.ok("Orçamento aprovado com sucesso!");
+	            } else {
+	                return ResponseEntity.badRequest().body("Este orçamento já foi aprovado anteriormente.");
+	            }
+	        } else {
+	            return ResponseEntity.badRequest().body("Código de aprovação inválido.");
+	        }
+	    } else {
+	        return ResponseEntity.notFound().build();
+	    }
+	}
+
+	
+	
 
 }

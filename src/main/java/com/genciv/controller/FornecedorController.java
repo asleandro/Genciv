@@ -37,7 +37,7 @@ public class FornecedorController {
 
 	@GetMapping("/{id}")
 	public Fornecedor detalhesFornecedor(@PathVariable Long id) {
-		return fornecedorService.buscarPorId(id);
+		return fornecedorService.findById(id);
 	}
 
 	@PostMapping("/novo")
@@ -73,7 +73,7 @@ public class FornecedorController {
 
 	@PutMapping("/{id}/editar")
 	public ResponseEntity<Fornecedor> editarFornecedor(@PathVariable Long id, @RequestBody Fornecedor fornecedor) {
-		Fornecedor fornecedorAtualizado = fornecedorService.buscarPorId(id);
+		Fornecedor fornecedorAtualizado = fornecedorService.findById(id);
 		Endereco enderecoAtualizado = fornecedor.getEndereco();
 		if (fornecedorAtualizado == null) {
 			return new ResponseEntity<>(HttpStatus.BAD_REQUEST);

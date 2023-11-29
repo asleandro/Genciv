@@ -37,7 +37,7 @@ public class ClienteController {
 
 	@GetMapping("/{id}")
 	public Cliente detalhesCliente(@PathVariable Long id) {
-		return clienteService.buscarPorId(id);
+		return clienteService.findById(id);
 	}
 
 	@PostMapping("/novo")
@@ -74,7 +74,7 @@ public class ClienteController {
 
 	@PutMapping("/{id}/editar")
 	public ResponseEntity<Cliente> editarCliente(@PathVariable Long id, @RequestBody Cliente cliente) {
-	    Cliente clienteAtualizado = clienteService.buscarPorId(id);
+	    Cliente clienteAtualizado = clienteService.findById(id);
 	    Endereco enderecoAtualizado = cliente.getEndereco();
 	    if (clienteAtualizado == null) {
 	        return new ResponseEntity<>(HttpStatus.BAD_REQUEST);

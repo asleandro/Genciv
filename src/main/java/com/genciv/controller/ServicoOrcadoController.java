@@ -32,12 +32,12 @@ public class ServicoOrcadoController {
 	@PostMapping("/novo")
 	public ResponseEntity<?> novoServicoOrcado(@RequestBody ServicoOrcadoDTO servicoOrcadoDTO) {
 		try {
-			Servico servico = servicoService.buscarPorId(servicoOrcadoDTO.getServicoId());
+			Servico servico = servicoService.findById(servicoOrcadoDTO.getServicoId());
             if (servico == null) {
                 return new ResponseEntity<>("Serviço não encontrado", HttpStatus.NOT_FOUND);
             }
             
-            Orcamento orcamento = orcamentoService.buscarPorId(servicoOrcadoDTO.getOrcamentoId());
+            Orcamento orcamento = orcamentoService.findById(servicoOrcadoDTO.getOrcamentoId());
             if (orcamento == null) {
                 return new ResponseEntity<>("Orçamento não encontrado", HttpStatus.NOT_FOUND);
             }

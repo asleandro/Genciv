@@ -1,6 +1,7 @@
 package com.genciv.model;
 
 import java.util.List;
+import java.util.UUID;
 
 import org.hibernate.annotations.Cascade;
 import org.hibernate.annotations.CascadeType;
@@ -24,7 +25,7 @@ public class Orcamento {
 	@Column(name = "id")
 	private Long id;
 
-	@ManyToOne(fetch = FetchType.EAGER)
+	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "cliente_id")
 	private Cliente cliente;
 
@@ -39,10 +40,18 @@ public class Orcamento {
 	private String prazoPagamentoMaterial;
 	private String prazoPagamentoServico;
 	private Boolean ativo;
+	private Boolean aprovado;
+
+	@Column(name = "codigo_aprovacao")
+	private String codigoAprovacao;
 
 	@OneToMany(mappedBy = "orcamento", fetch = FetchType.EAGER)
 	@Cascade(CascadeType.PERSIST)
 	private List<ServicoOrcado> servicosOrcados;
+
+	public Orcamento() {
+		this.codigoAprovacao = UUID.randomUUID().toString();
+	}
 
 	public List<ServicoOrcado> getServicosOrcados() {
 		return servicosOrcados;
@@ -50,6 +59,10 @@ public class Orcamento {
 
 	public void setServicosOrcados(List<ServicoOrcado> servicosOrcados) {
 		this.servicosOrcados = servicosOrcados;
+	}
+
+	public void aprovarOrcamento() {
+		this.aprovado = true;
 	}
 
 	public Long getId() {
@@ -130,6 +143,26 @@ public class Orcamento {
 				+ ", valorServicoTotal=" + valorServicoTotal + ", prazoPagamentoMaterial='" + prazoPagamentoMaterial
 				+ '\'' + ", prazoPagamentoServico='" + prazoPagamentoServico + '\'' + ", ativo=" + ativo
 				+ ", servicosOrcados=" + servicosOrcados + '}';
+	}
+
+	public Boolean getAprovado() {
+		return aprovado;
+	}
+
+	public void setAprovado(Boolean aprovado) {
+		this.aprovado = aprovado;
+	}
+
+	public void setStatus(Boolean aprovado) {
+		this.aprovado = aprovado;
+	}
+
+	public String getCodigoAprovacao() {
+		return codigoAprovacao;
+	}
+
+	public void setCodigoAprovacao(String codigoAprovacao) {
+		this.codigoAprovacao = codigoAprovacao;
 	}
 
 }

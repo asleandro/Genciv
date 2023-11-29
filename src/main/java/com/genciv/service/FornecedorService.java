@@ -25,7 +25,7 @@ public class FornecedorService {
 	}
 
 	@Transactional
-	public Fornecedor buscarPorId(Long id) {
+	public Fornecedor findById(Long id) {
 		return fornecedorRepository.findById(id).orElse(null);
 	}
 

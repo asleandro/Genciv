@@ -56,7 +56,7 @@ public class ServicoController {
 
 	@GetMapping("/{id}")
 	public ResponseEntity<Servico> detalhesServico(@PathVariable Long id) {
-		Servico servico = servicoService.buscarPorId(id);
+		Servico servico = servicoService.findById(id);
 		if (servico != null) {
 			return new ResponseEntity<>(servico, HttpStatus.OK);
 		} else {
@@ -66,7 +66,7 @@ public class ServicoController {
 
 	@PutMapping("/{id}/editar")
 	public ResponseEntity<Servico> editarServico(@PathVariable Long id, @RequestBody Servico servico) {
-		Servico servicoAtualizado = servicoService.buscarPorId(id);
+		Servico servicoAtualizado = servicoService.findById(id);
 		if (servicoAtualizado == null) {
 			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
 		}
@@ -84,7 +84,7 @@ public class ServicoController {
 
 	@DeleteMapping("/{id}/excluir")
 	public ResponseEntity<Void> excluirServico(@PathVariable Long id) {
-		Servico servico = servicoService.buscarPorId(id);
+		Servico servico = servicoService.findById(id);
 		if (servico == null) {
 			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
 		}
